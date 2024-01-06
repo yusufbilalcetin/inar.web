@@ -1,63 +1,68 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
-public class HomePage {
-    private WebDriver driver;
+public class HomePage extends BasePage {
 
-    //Locators
-    private By WebOrderLink = new By.ByLinkText("Weborder");
+	@FindBy(linkText = "Weborder")
+	private WebElement WebOrderLink;
 
-    private By WebAutomationLink = new By.ByLinkText("Webautomation");
+	@FindBy(linkText = "Webautomation")
+	private WebElement WebAutomationLink;
 
-    private By TargetMarketLink = new By.ByLinkText("Target Market");
+	@FindBy(linkText = "Target Market")
+	private WebElement TargetMarketLink;
 
-    private By BookingLink = new By.ByLinkText("Booking");
+	@FindBy(linkText = "Booking")
+	private WebElement BookingLink;
 
-    private By HandlingCertificationLink = new By.ByLinkText("Handling Certifications");
+	@FindBy(linkText = "Handling Certifications")
+	private WebElement HandlingCertificationLink;
 
-    private By FileUploadingLink = new By.ByLinkText("File Uploading");
+	@FindBy(linkText = "File Uploading")
+	private WebElement FileUploadingLink;
 
-    private By exploreInarTestingWorldTitleText = By.cssSelector("h1.display-1.text-fifth");
+	@FindBy(css = "h1.display-1.text-fifth")
+	private WebElement exploreInarTestingWorldTitleText;
 
+	// Constructor
 
-    //Constructor
+	public HomePage() {
+		super();
+	}
 
-    public HomePage(WebDriver driver) {
-        this.driver = driver;
-    }
+	// Page Actions with java Mehthods
+	public void clickOnWebOrder() {
+		WebOrderLink.click();
+	}
 
-    //Page Actions with java Mehthods
-    public WeborderLoginPage clickOnWebOrder(){
-        driver.findElement(WebOrderLink).click();
-        return new WeborderLoginPage(driver);
-    }
+	public void clickWebAutomationLink() {
+		WebAutomationLink.click();
+	}
 
-    public void clickWebAutomationLink(){
-        driver.findElement(WebAutomationLink).click();
-    }
+	public void clickTargetMarketLink() {
+		TargetMarketLink.click();
+	}
 
-    public void clickTargetMarketLink(){
-        driver.findElement(TargetMarketLink).click();
-    }
+	public void clickBookingLink() {
+		BookingLink.click();
+	}
 
-    public void clickBookingLink(){
-        driver.findElement(BookingLink).click();
-    }
-    public void clickHandlingCertificationLink(){
-        driver.findElement(HandlingCertificationLink).click();
-    }
+	public void clickHandlingCertificationLink() {
+		HandlingCertificationLink.click();
+	}
 
-    public void clickFileUploadingLink(){
-        driver.findElement(exploreInarTestingWorldTitleText).click();
-    }
+	public void clickFileUploadingLink() {
+		exploreInarTestingWorldTitleText.click();
+	}
 
-    public String getWelcomeText(){
-        return driver.findElement(exploreInarTestingWorldTitleText).getText();
-    }
-    public void refreshPage(){
-        driver.navigate().refresh();
-    }
+	public String getWelcomeText() {
+		return exploreInarTestingWorldTitleText.getText();
+	}
+
+	public void refreshPage() {
+		driver.navigate().refresh();
+	}
 
 }

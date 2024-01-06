@@ -1,165 +1,172 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 
-public class OrderPage {
-    private WebDriver driver;
+public class OrderPage extends BasePage {
 
-    //Product information
-    private By productSelectDropdown = By.id("productSelect");
+	// Product information
+	@FindBy(id = "productSelect")
+	private WebElement ProductDropdownElement;
 
-    private By quantityInputField = By.id("quantityInput");
+	@FindBy(id = "quantityInput")
+	private WebElement quantityInputField;
 
-    private By unitPriceField = By.id("unitPriceInput");
+	@FindBy(id = "unitPriceInput")
+	private WebElement unitPriceField;
 
-    private By discountInputField = By.id("discountInput");
+	@FindBy(id = "discountInput")
+	private WebElement discountInputField;
 
-    private By totalPriceField = By.id("totalInput");
+	@FindBy(id = "totalInput")
+	private WebElement totalPriceField;
 
-    private By calculateButton = By.xpath("//button[text()='Calculate']");
+	@FindBy(xpath = "//button[text()='Calculate']")
+	private WebElement calculateButton;
 
-    //Customer information
-    private By nameInputField = By.id("name");
+	// Customer information
+	@FindBy(id = "name")
+	private WebElement nameInputField;
 
-    private By streetInputField = By.id("street");
+	@FindBy(id = "street")
+	private WebElement streetInputField;
 
-    private By cityInputField = By.id("city");
+	@FindBy(id = "city")
+	private WebElement cityInputField;
 
-    private By stateInputField = By.id("state");
+	@FindBy(id = "state")
+	private WebElement stateInputField;
 
-    private By zipCodeInputField = By.id("zip");
+	@FindBy(id = "zip")
+	private WebElement zipCodeInputField;
 
-    //Payment information
+	// Payment information
+	@FindBy(id = "visa")
+	private WebElement visaCheckBox;
 
-    private By visaRadioButton = By.id("visa");
+	@FindBy(id = "mastercard")
+	private WebElement masterCardCheckBox;
 
-    private By masterCardRadioButton = By.id("mastercard");
+	@FindBy(id = "amex")
+	private WebElement americanExpressCheckBox;
 
-    private By amexRadioButton = By.id("amex");
+	@FindBy(id = "cardNumber")
+	private WebElement cardNumberInputField;
 
-    private By cardNumberInputField = By.id("cardNumber");
+	@FindBy(id = "expiryDate")
+	private WebElement expiryDateInputField;
 
-    private By expiryDateInputField = By.id("expiryDate");
+	@FindBy(xpath = "//button[text()='Process']")
+	private WebElement progressButton;
 
-    private By progressButton = By.xpath("//button[text()='Process']");
+	public OrderPage() {
+		super();
+	}
 
-    public OrderPage(WebDriver driver) {
-        this.driver = driver;
-    }
+	// Product information
+	public void selectProduct(String selectProduct) {
+		Select productDropdown = new Select(ProductDropdownElement);
+		productDropdown.selectByVisibleText(selectProduct);
+	}
 
-    //Product information
+	public void enterQuantity(String quantity) {
+		quantityInputField.clear();
+		quantityInputField.sendKeys(quantity);
+	}
 
-    public void selectProduct(String productName) {
-        WebElement productDropdown =  driver.findElement(productSelectDropdown);
-        Select product = new Select(productDropdown);
-        product.selectByVisibleText(productName);
-    }
+	public void enterDiscount(String discount) {
+		discountInputField.clear();
+		discountInputField.sendKeys(discount);
+	}
 
-    public void enterQuantity (String quantity) {
-        driver.findElement(quantityInputField).clear();
-        driver.findElement(quantityInputField).sendKeys(quantity);
-    }
+	public void clickOnCalculateButton() {
+		calculateButton.click();
+	}
 
-    public String getUnitPrice () {
-        return driver.findElement(unitPriceField).getAttribute("value");
-    }
+	public String calculatePrice(String productName, String quantity, String discount) {
+		selectProduct(productName);
+		enterQuantity(quantity);
+		enterDiscount(discount);
+		clickOnCalculateButton();
+		return totalPriceField.getAttribute("value");
+	}
 
-    public void enterDiscount (String discount) {
-        driver.findElement(discountInputField).clear();
-        driver.findElement(discountInputField).sendKeys(discount);
-    }
+	public void enterProduct(String productName, String quatity, String discount) {
+		selectProduct(productName);
+		enterQuantity(quatity);
+		enterDiscount(discount);
+		clickOnCalculateButton();
+	}
 
-    public String getTotalPrice () {
-        return driver.findElement(totalPriceField).getAttribute("value");
-    }
+	// Customer information
 
-    public void clickCalculate () {
-        driver.findElement(calculateButton).click();
-    }
+	public void enterCustomerInfo(String name, String street, String city, String state, String zip) {
+		enterName(name);
+		enterStreet(street);
+		enterCity(city);
+		enterState(state);
+		enterZipCode(zip);
+	}
 
-    public String calculatePrice (String productName, String quantity, String discount) {
-        selectProduct(productName);
-        enterQuantity(quantity);
-        enterDiscount(discount);
-        clickCalculate();
-        return getTotalPrice();
-    }
+	public void enterName(String name) {
+		nameInputField.clear();
+		nameInputField.sendKeys(name);
+	}
 
-    //Customer information
+	public void enterStreet(String street) {
+		streetInputField.clear();
+		streetInputField.sendKeys(street);
+	}
 
-    public void enterName (String name) {
-        driver.findElement(nameInputField).clear();
-        driver.findElement(nameInputField).sendKeys(name);
-    }
+	public void enterCity(String city) {
+		cityInputField.clear();
+		cityInputField.sendKeys(city);
+	}
 
-    public void enterStreet (String street) {
-        driver.findElement(streetInputField).clear();
-        driver.findElement(streetInputField).sendKeys(street);
-    }
+	public void enterState(String state) {
+		stateInputField.clear();
+		stateInputField.sendKeys(state);
+	}
 
-    public void enterCity (String city) {
-        driver.findElement(cityInputField).clear();
-        driver.findElement(cityInputField).sendKeys(city);
-    }
+	public void enterZipCode(String zipCode) {
+		zipCodeInputField.clear();
+		zipCodeInputField.sendKeys(zipCode);
+	}
 
-    public void enterState (String state) {
-        driver.findElement(stateInputField).clear();
-        driver.findElement(stateInputField).sendKeys(state);
-    }
+	public void selectPaymentMethod(String paymentMethod) {
+		switch (paymentMethod.toLowerCase()) {
+			case "visa" -> clickCheckBox(visaCheckBox);
+			case "mastercard" -> clickCheckBox(masterCardCheckBox);
+			case "amex" -> clickCheckBox(americanExpressCheckBox);
+			default -> System.out.println("Payment method doesn't exist");
+		}
+	}
 
-    public void enterZipCode (String zipCode) {
-        driver.findElement(zipCodeInputField).clear();
-        driver.findElement(zipCodeInputField).sendKeys(zipCode);
-    }
+	public void clickProgress() {
+		progressButton.click();
+	}
 
-    public void enterCustomerInfo(String name, String street, String city, String state, String zip) {
-        enterName(name);
-        enterStreet(street);
-        enterCity(city);
-        enterState(state);
-        enterZipCode(zip);
-    }
+	private void clickCheckBox(WebElement checkBox) {
+		if (!checkBox.isSelected()) {
+			checkBox.click();
+		}
+	}
 
-    //Payment information
+	public void enterCardNumber(String cardNumber) {
+		cardNumberInputField.clear();
+		cardNumberInputField.sendKeys(cardNumber);
+	}
 
-    public void selectVisa () {
-        driver.findElement(visaRadioButton).click();
-    }
+	public void enterExpiryDate(String expiryDate) {
+		expiryDateInputField.clear();
+		expiryDateInputField.sendKeys(expiryDate);
+	}
 
-    public void selectMasterCard () {
-        driver.findElement(masterCardRadioButton).click();
-    }
+	public void enterPaymentInformation(String paymentMethod, String carNumber, String expiryDate) {
+		selectPaymentMethod(paymentMethod);
+		enterCardNumber(carNumber);
+		enterExpiryDate(expiryDate);
+	}
 
-    public void selectAmex () {
-        driver.findElement(amexRadioButton).click();
-    }
-
-    public void enterCardNumber (String cardNumber) {
-        driver.findElement(cardNumberInputField).clear();
-        driver.findElement(cardNumberInputField).sendKeys(cardNumber);
-    }
-
-    public void enterExpiryDate (String expiryDate) {
-        driver.findElement(expiryDateInputField).clear();
-        driver.findElement(expiryDateInputField).sendKeys(expiryDate);
-    }
-
-    public void enterPaymentInfo(String cardType, String cardNr, String expiryDate) {
-        switch (cardType.toLowerCase()) {
-            case "visa" -> selectVisa();
-            case "mastercard" -> selectMasterCard();
-            case "amex" -> selectAmex();
-        }
-
-        enterCardNumber(cardNr);
-        enterExpiryDate(expiryDate);
-        clickProgress();
-    }
-
-    public void clickProgress () {
-        driver.findElement(progressButton).click();
-    }
 }
