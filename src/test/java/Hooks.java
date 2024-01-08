@@ -4,16 +4,15 @@ import org.junit.jupiter.api.BeforeAll;
 
 public class Hooks {
 
-	@BeforeAll
-	public static void setUpEnviroment() {
-		Driver.getDriver();
-	}
+    @BeforeAll
+    public static void setUpEnviroment() {
+        Driver.getDriver();
+    }
 
-	@AfterAll
-	public static void teardownTestEnviroment() {
-		if (Driver.getDriver() != null) {
-			Driver.getDriver().quit();
-		}
-	}
-
+    @AfterAll
+    public static void teardownTestEnviroment() {
+        Driver.closeDriver();
+    }
 }
+
+
